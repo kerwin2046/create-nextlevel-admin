@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from './context';
+import { useAuth } from '@/core/auth/context';
 
 /** 未登录时跳转登录页 */
 export function RequireAuth({ children }: { children: ReactNode }) {

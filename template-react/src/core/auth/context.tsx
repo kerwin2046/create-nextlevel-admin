@@ -6,9 +6,9 @@ import React, {
   useEffect,
   type ReactNode,
 } from 'react';
-import * as authApi from '../../api/auth';
-import { hasPermission } from './rbac';
-import type { User } from '../../types';
+import * as authApi from '@/api/auth';
+import { hasPermission } from '@/core/auth/rbac';
+import type { User } from '@/types';
 
 export interface AuthContextValue {
   user: User | null;

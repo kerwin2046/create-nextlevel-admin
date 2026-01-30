@@ -1,4 +1,4 @@
-import request from './client';
+import request from '@/api/client';
 
 /** 登录 */
 export const login = (data: Record<string, unknown>) =>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 /** 无侧栏/顶栏的空白布局，用于登录等单页。 */

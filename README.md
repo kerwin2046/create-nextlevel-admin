@@ -11,7 +11,7 @@
 
 ## 使用方式
 
-1. **拷贝模板**：将 `template/` 目录内容拷贝到新项目的 `frontend/`（或目标目录）。
+1. **拷贝模板**：将 `template/*` 目录内容拷贝到新项目的 `frontend/`（或目标目录）。
 2. **安装依赖**：在目标目录执行 `npm install`。
 3. **按需修改**：替换项目名、`VITE_API_BASE`（或 `src/api/client.ts` 中的 baseURL）、权限配置、路由与菜单等。
 

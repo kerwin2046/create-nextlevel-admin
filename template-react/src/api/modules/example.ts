@@ -1,4 +1,4 @@
-import request from '../client';
+import request from '@/api/client';
 
 /** 示例：分页列表 */
 export const getExampleList = (params?: Record<string, unknown>) =>
