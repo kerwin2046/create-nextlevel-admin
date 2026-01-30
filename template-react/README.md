@@ -33,9 +33,20 @@
 | **src/hooks/** | 自定义 Hooks。 |
 | **src/utils/**、**src/constants/** | 工具与常量。 |
 
+## 前端必选库（已内置）
+
+| 库 | 用途 |
+|------|------|
+| **@tanstack/react-query** | 服务端状态：请求缓存、loading/error、重试、与 axios 配合做列表/详情等。入口已包 `QueryClientProvider`。 |
+| **ahooks** | 常用 Hooks：`useRequest`（可替代手写 loading）、`useLocalStorage`、`useDebounceFn` 等，与 antd 生态契合。 |
+| **clsx** | 条件 className：`clsx('btn', isActive && 'active')`，体积小、无争议。 |
+| **react-hook-form** | 表单状态与校验。配合 **@hookform/resolvers** + **zod** 做 schema 校验，可与 antd Form 控件结合（`Controller`）。 |
+
+其余：react、react-router-dom、axios、antd、zustand、dayjs 等见 `package.json`。
+
 ## 当前状态
 
-- **已就绪**：工程结构、请求/权限/状态基建、布局与路由骨架、TypeScript 与规范。
+- **已就绪**：工程结构、请求/权限/状态基建、布局与路由骨架、TypeScript 与规范、React Query / ahooks / clsx。
 - **占位**：登录页、首页、示例页为占位组件，需替换为实际页面；侧栏菜单为写死配置，可按需改为从路由配置生成。
 
 ## 约定与设计

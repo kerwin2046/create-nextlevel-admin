@@ -29,7 +29,7 @@
 ## 技术栈（模板默认）
 
 - React 18 + Vite 5 + Ant Design 5 + TypeScript
-- axios（请求）、Zustand（全局状态）
+- axios（请求）、Zustand（全局状态）、**@tanstack/react-query**（服务端状态/缓存）、**ahooks**（常用 Hooks）、**clsx**（条件 className）、**react-hook-form** + **zod**（表单与校验）
 - React Router 6
 - ESLint + Prettier + EditorConfig
 

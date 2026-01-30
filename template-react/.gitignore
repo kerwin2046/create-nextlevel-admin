@@ -31,3 +31,6 @@ Thumbs.db
 .cache/
 coverage/
 *.tsbuildinfo
+
+# pnpm
+pnpm-lock.yaml
