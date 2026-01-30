@@ -80,7 +80,3 @@ src/
 
 本项目采用 [MIT License](LICENSE)。
 
-## 设计文档
-
-完整方案见：[docs/plans/2025-01-30-nextlevel-admin-scaffold-design.md](../docs/plans/2025-01-30-nextlevel-admin-scaffold-design.md)（若存在）。
-
