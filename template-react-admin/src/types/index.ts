@@ -6,6 +6,12 @@ export interface User {
   [key: string]: unknown;
 }
 
+/** 登录参数 */
+export interface LoginPayload {
+  username: string;
+  password: string;
+}
+
 /** 登录响应 */
 export interface LoginResponse {
   token?: string;
@@ -18,3 +24,4 @@ export interface RouteMeta {
   title?: string;
   permissions?: string[];
 }
+

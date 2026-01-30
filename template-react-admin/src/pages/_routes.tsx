@@ -1,13 +1,13 @@
 import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-dom';
-import { RequireAuth } from '@/core/auth/guards';
 import BasicLayout from '@/layouts/BasicLayout';
 import BlankLayout from '@/layouts/BlankLayout';
+import Login from '@/pages/sys/login';
 import type { RouteMeta } from '@/types';
+import { AuthGuard } from '@/core/auth/auth.guard';
 
 // 占位页面，后续替换为实际页面组件
 const Home = () => <div>首页</div>;
 const Example = () => <div>示例页</div>;
-const Login = () => <div>登录页（占位）</div>;
 
 /** 带 meta 的路由项（RouteObject 交叉 meta/children，用于 RBAC） */
 export type RouteObjectWithMeta = RouteObject & {
@@ -23,11 +23,11 @@ const routes: RouteObjectWithMeta[] = [
     children: [{ index: true, element: <Login /> }],
   },
   {
-    path: '/',
+    path: '/dashboard',
     element: (
-      <RequireAuth>
+      <AuthGuard>
         <BasicLayout />
-      </RequireAuth>
+      </AuthGuard>
     ),
     children: [
       { index: true, element: <Home />, meta: { title: '首页' } },
@@ -38,7 +38,7 @@ const routes: RouteObjectWithMeta[] = [
       },
     ],
   },
-  { path: '*', element: <Navigate to="/" replace /> },
+  { path: '*', element: <Navigate to="/dashboard" replace /> },
 ];
 
 export const router = createBrowserRouter(routes as RouteObject[], {

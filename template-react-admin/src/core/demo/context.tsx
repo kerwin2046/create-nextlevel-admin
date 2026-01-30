@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   useContext,
   useState,
@@ -7,13 +7,14 @@ import React, {
   type ReactNode,
 } from 'react';
 import * as authApi from '@/api/auth';
-import { hasPermission } from '@/core/auth/rbac';
+import { hasPermission } from '@/core/demo/rbac';
 import type { User } from '@/types';
 
 export interface AuthContextValue {
   user: User | null;
   loading: boolean;
   login: (payload: Record<string, unknown>) => Promise<unknown>;
+  register: (payload: Record<string, unknown>) => Promise<unknown>;
   logout: () => Promise<void>;
   reload: () => Promise<void>;
   hasPermission: (permission: string) => boolean;
@@ -34,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     try {
       const data = await authApi.getCurrentUser();
-      setUser(data as User);
+      setUser(data as unknown as User);
     } catch {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -48,24 +49,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadUser();
   }, [loadUser]);
 
-  const login = useCallback(
-    async (payload: Record<string, unknown>) => {
-      const data = (await authApi.login(payload)) as { token?: string; user?: User };
-      if (data.token) localStorage.setItem('token', data.token);
-      if (data.user) {
-        localStorage.setItem('user', JSON.stringify(data.user));
-        setUser(data.user);
-      }
-      return data;
-    },
-    []
-  );
+  const login = useCallback(async (payload: Record<string, unknown>) => {
+    console.log('login', payload);
+    const data = (await authApi.login(payload)) as { token?: string; user?: User };
+    console.log('login data', data);
+    if (data.token) localStorage.setItem('token', data.token);
+    if (data.username) {
+      localStorage.setItem('user', JSON.stringify(data.username));
+      setUser(data.username);
+    }
+    return data;
+  }, []);
 
   const logout = useCallback(async () => {
     await authApi.logout();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+  }, []);
+
+  const register = useCallback(async (payload: Record<string, unknown>) => {
+    const data = (await authApi.register(payload)) as { token?: string; user?: User };
+    if (data.token) localStorage.setItem('token', data.token);
+    if (data.user) {
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.user);
+    }
+    return data;
   }, []);
 
   const can = useCallback(
@@ -78,6 +88,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     loading,
     login,
+    register,
     logout,
     reload: loadUser,
     hasPermission: can,

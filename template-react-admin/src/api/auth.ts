@@ -1,8 +1,10 @@
 import request from '@/api/client';
 
 /** 登录 */
-export const login = (data: Record<string, unknown>) =>
-  request.post<unknown>('/auth/login', data);
+export const login = (data: Record<string, unknown>) => request.post<unknown>('/auth/login', data);
+
+/** 注册 */
+export const register = (data: Record<string, unknown>) => request.post<unknown>('/auth/register', data);
 
 /** 登出（可选：调用后端登出接口） */
 export const logout = () => request.post('/auth/logout').catch(() => {});
