@@ -1,0 +1,25 @@
+---
+description: NextLevel Admin 工程约定：结构、风格、权限、请求、状态
+globs: ["src/**"]
+---
+
+# NextLevel Admin 工程约定
+
+## 技术栈
+
+- React 18、Vite 5、Ant Design 5、axios、Zustand、React Router 6、TypeScript
+
+## 目录约定
+
+- **src/api/**：请求层。新接口写在 `api/modules/` 对应域（如 user.ts、system.ts），统一使用 `api/client.ts` 导出的实例。
+- **src/core/auth/**：权限（Context、守卫、RBAC）。新页面需在路由配置中写 `meta.permissions`；按钮级用 `RequirePermission` 或 `useAuth().hasPermission`。
+- **src/core/state/**：全局状态入口（Zustand store），仅放跨页面/基建相关状态。
+- **src/layouts/**：布局；**src/pages/**：页面与 `_routes.tsx`；**src/components/**：通用组件；**src/types/**：共享类型；**src/hooks/**、**src/utils/**、**src/constants/**：hooks、工具、常量。
+
+## 代码风格
+
+- 与 ESLint、Prettier、EditorConfig、TypeScript 一致。组件/页面文件 PascalCase；非组件 camelCase。优先命名导出。
+
+## 请求与权限
+
+- 所有 HTTP 请求必须通过 `api/client.ts` 的实例；401 由拦截器处理（清空登录态并跳转登录）。新增接口按域放在 `api/modules/*.ts`。
