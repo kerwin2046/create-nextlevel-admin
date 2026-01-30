@@ -5,8 +5,8 @@
 ## 使用步骤
 
 1. 将本目录（或除 README 外的全部内容）拷贝到新项目的 `frontend/`。
-2. 在 `frontend/` 下执行 `npm install`。
-3. 修改 `src/api/client.ts` 中的 baseURL，或通过环境变量 `VITE_API_BASE` 配置。
+2. 在 `frontend/` 下执行 `pnpm install`（需 [pnpm](https://pnpm.io/)；`package.json` 已指定 `packageManager`）。
+3. 复制 `.env.example` 为 `.env`，按需修改 `VITE_API_BASE`；或直接改 `src/api/client.ts` 中的 baseURL。
 4. 在 `src/pages/_routes.tsx` 中配置业务路由与 `meta.permissions`。
 5. 在 `src/api/modules/` 下按域添加接口；在 `src/core/auth` 中按需对接后端登录与权限接口；类型定义放在 `src/types/`。
 
@@ -14,11 +14,11 @@
 
 | 命令 | 说明 |
 |------|------|
-| `npm run dev` | 开发（默认端口 5173） |
-| `npm run build` | 类型检查 + 构建 |
-| `npm run preview` | 预览构建产物 |
-| `npm run lint` | ESLint 检查 |
-| `npm run format` | Prettier 格式化 |
+| `pnpm dev` | 开发（默认端口 5173） |
+| `pnpm build` | 类型检查 + 构建 |
+| `pnpm preview` | 预览构建产物 |
+| `pnpm lint` | ESLint 检查 |
+| `pnpm format` | Prettier 格式化 |
 
 ## 目录与职责
 

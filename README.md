@@ -5,15 +5,16 @@
 ## 项目定位
 
 - **已具备**：分层目录、请求封装（axios + 拦截器）、权限（AuthContext + 路由守卫 + RBAC）、全局状态（Zustand）、布局骨架、路由配置、TypeScript + 规范（ESLint / Prettier / EditorConfig）及 Cursor 规则。
-- **待完善**：登录页/首页为占位，需按业务实现；菜单目前与路由未自动联动；可按需补充 `.env.example`、测试、路由级权限校验等。
+- **待完善**：登录页/首页为占位，需按业务实现；菜单目前与路由未自动联动；可按需补充测试、路由级权限校验等。
 
 适合作为**种子项目**拷贝后，在约定下扩展业务页面与接口。
 
 ## 使用方式
 
-1. **拷贝模板**：将 `template/*` 目录内容拷贝到新项目的 `frontend/`（或目标目录）。
-2. **安装依赖**：在目标目录执行 `npm install`。
-3. **按需修改**：替换项目名、`VITE_API_BASE`（或 `src/api/client.ts` 中的 baseURL）、权限配置、路由与菜单等。
+1. **拷贝模板**：将 `template-react/` 目录内容拷贝到新项目的 `frontend/`（或目标目录）。
+2. **安装依赖**：在目标目录执行 `pnpm install`（需 [pnpm](https://pnpm.io/)；模板已配置 `packageManager`）。
+3. **环境变量**：复制 `.env.example` 为 `.env`，按需修改 `VITE_API_BASE`；或直接改 `src/api/client.ts` 中的 baseURL。
+4. **按需修改**：替换项目名、权限配置、路由与菜单等。
 
 （后续可增加 `scripts/generate.js` 一键生成到指定路径。）
 
@@ -21,7 +22,7 @@
 
 | 路径 | 说明 |
 |------|------|
-| **template/** | 可直接复用的前端工程模板（结构 + 基建 + AI 说明）。 |
+| **template-react/** | 可直接复用的前端工程模板（结构 + 基建 + AI 说明）。 |
 | **scripts/** | 可选，生成脚本。 |
 | **README.md** | 本说明。 |
 
@@ -32,7 +33,7 @@
 - React Router 6
 - ESLint + Prettier + EditorConfig
 
-## 模板目录结构（template/src）
+## 模板目录结构（template-react/src）
 
 ```
 src/
@@ -65,8 +66,21 @@ src/
 
 ## Git 规范
 
-- **`.gitignore`**：已配置忽略 `node_modules/`、`dist/`、`.env*.local`、常见编辑器与系统文件。仓库根与 `template/` 下各有一份，拷贝模板后新项目即带忽略规则。
+- **`.gitignore`**：已配置忽略 `node_modules/`、`dist/`、`.env*.local`、常见编辑器与系统文件。仓库根与 `template-react/` 下各有一份，拷贝模板后新项目即带忽略规则。
 - **`.gitattributes`**：仓库根已配置 `* text=auto eol=lf`，统一换行符，便于跨平台协作。
 - **提交信息**：建议使用 [Conventional Commits](https://www.conventionalcommits.org/)（如 `feat: 登录页`、`fix: 401 跳转`）。若需强制校验，可自行接入 husky + commitlint。
 
+## 环境与包管理
+
+- **Node**：建议 >= 18（模板 `package.json` 中已声明 `engines.node`）。
+- **包管理**：使用 **pnpm**（`packageManager` 已指定）。首次克隆或拷贝后执行 `pnpm install`。未安装 pnpm 时可用 `corepack enable && corepack prepare pnpm@latest --activate`，或见 [pnpm 安装](https://pnpm.io/installation)。
+- **环境变量**：模板内提供 `.env.example`，复制为 `.env` 后按需修改 `VITE_API_BASE` 等。
+
+## 许可证
+
+本项目采用 [MIT License](LICENSE)。
+
+## 设计文档
+
+完整方案见：[docs/plans/2025-01-30-nextlevel-admin-scaffold-design.md](../docs/plans/2025-01-30-nextlevel-admin-scaffold-design.md)（若存在）。
 
