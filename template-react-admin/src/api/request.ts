@@ -17,8 +17,9 @@ request.interceptors.response.use(
     const original = error.config;
     console.log('original', original);
 
-    // 如果请求状态码为 401 且未重试
-    if (error.response?.status === 401 && !original._retry) {
+    // 如果请求状态码为 401 且未重试（/me、/refresh 不触发刷新，避免死循环或无效重试）
+    const isAuthCheck = /\/auth\/(me|refresh)$/.test(original.url ?? '');
+    if (error.response?.status === 401 && !original._retry && !isAuthCheck) {
       original._retry = true;
 
       // 如果未刷新 token

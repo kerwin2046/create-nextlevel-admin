@@ -23,17 +23,15 @@ export const authController = {
       return;
     }
     const token = signToken(user);
-    res.cookie(config.cookieName, token, {
-      httpOnly: true,
-      sameSite: 'lax',
-      maxAge: config.cookieMaxAge,
-      path: '/',
-    });
+    res.cookie(config.cookieName, token, config.cookieOptions);
     res.json({ user });
   },
 
   logout(_req: Request, res: Response): void {
-    res.clearCookie(config.cookieName, { path: '/' });
+    res.clearCookie(config.cookieName, {
+      path: config.cookieOptions.path,
+      domain: config.cookieOptions.domain,
+    });
     res.status(200).json({});
   },
 

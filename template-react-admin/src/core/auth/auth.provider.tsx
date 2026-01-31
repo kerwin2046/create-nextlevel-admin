@@ -20,12 +20,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // // 页面刷新时恢复登录态
-  // useEffect(() => {
-  //   getCurrentUser()
-  //     .then(setUser)
-  //     .finally(() => setLoading(false));
-  // }, []);
+  // 页面刷新时恢复登录态：有 Cookie 则 /me 返回用户，否则 401，置为未登录
+  useEffect(() => {
+    getCurrentUser()
+      .then(setUser)
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
+  }, []);
 
   /** 登录 */
   const login = async (payload: LoginPayload) => {

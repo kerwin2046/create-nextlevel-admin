@@ -16,7 +16,7 @@ export default function BasicLayout() {
 
   const menuItems = [
     { key: '/dashboard', label: '首页' },
-    { key: '/example', label: '示例' },
+    { key: '/dashboard/example', label: '示例' },
   ];
 
   return (

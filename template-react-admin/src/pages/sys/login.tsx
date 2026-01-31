@@ -15,8 +15,8 @@ export default function Login() {
   const location = useLocation();
 
   const [form, setForm] = useState<LoginForm>({
-    username: 'chenyilong916002@gmail.com',
-    password: '12345678',
+    username: 'admin',
+    password: 'admin',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
