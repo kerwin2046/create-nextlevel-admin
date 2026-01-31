@@ -1,1 +1,7 @@
-// 汇总所有路由，挂到 /api
+import { Router } from 'express';
+import { authRoutes } from './auth.routes.js';
+
+const router = Router();
+router.use('/auth', authRoutes);
+
+export const apiRoutes = router;

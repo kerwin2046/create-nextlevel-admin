@@ -1,1 +1,15 @@
-// 创建 Express 实例、挂载全局中间件，不 listen
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import { apiRoutes } from './routes/index.js';
+import { errorHandler } from './middleware/error.js';
+
+const app = express();
+
+app.use(cors({ origin: true, credentials: true }));
+app.use(express.json());
+app.use(cookieParser());
+app.use('/api', apiRoutes);
+app.use(errorHandler);
+
+export default app;

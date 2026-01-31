@@ -4,6 +4,14 @@
 
 **开发规范**：目录、分层、命名、错误与响应、鉴权、代码风格等见 **[CONVENTIONS.md](./CONVENTIONS.md)**。AI 与编辑器约定见 `.cursor/rules/nextlevel-express-admin.mdc`。
 
+### 本地运行（Docker + Prisma）
+
+1. 启动 PostgreSQL：`docker compose up -d`
+2. 复制 `.env.example` 为 `.env`，填写 `JWT_SECRET`，`DATABASE_URL` 默认即连本机 Docker 库
+3. 安装依赖并生成 Prisma Client：`pnpm install`
+4. 迁移并播种：`pnpm db:migrate`（首次会建表），`pnpm db:seed`（创建管理员 `admin` / `admin`）
+5. 启动服务：`pnpm dev`，默认 `http://localhost:3000`
+
 ---
 
 ## 1. 整体分层

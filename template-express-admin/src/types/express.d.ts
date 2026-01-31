@@ -1,1 +1,12 @@
-// 扩展 Request：req.user, req.requestId 等
+import type { User } from './auth.js';
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: User;
+      requestId?: string;
+    }
+  }
+}
+
+export {};

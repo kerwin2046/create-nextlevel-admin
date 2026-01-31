@@ -1,1 +1,6 @@
-// 启动入口：加载配置、连接 DB、app.listen
+import app from './app.js';
+import { config } from './config/index.js';
+
+app.listen(config.port, () => {
+  console.log(`Server listening on http://localhost:${config.port}`);
+});

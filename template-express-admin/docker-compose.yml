@@ -1,0 +1,33 @@
+# PostgreSQL for template-express-admin (Prisma)
+# Usage: docker compose up -d
+# DATABASE_URL=postgresql://postgres:postgres@localhost:5432/admin?schema=public
+
+name: template-express-admin
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: template-express-admin-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - template_express_admin_pgdata:/var/lib/postgresql/data
+    networks:
+      - template-express-admin-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  template_express_admin_pgdata:
+
+networks:
+  template-express-admin-net:
+    driver: bridge
