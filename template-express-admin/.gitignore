@@ -31,5 +31,3 @@ Thumbs.db
 .cache/
 coverage/
 *.tsbuildinfo
-
-.pnpm-store/

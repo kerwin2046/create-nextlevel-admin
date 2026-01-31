@@ -1,0 +1,41 @@
+---
+description: 后台工程约定：分层、命名、鉴权、错误与响应、代码风格
+globs: ["src/**"]
+---
+
+# NextLevel 后台工程约定
+
+## 技术栈
+
+- Express、TypeScript、ESM、pnpm；鉴权 JWT + cookie；校验 express-validator；日志 pino。
+
+## 目录与分层
+
+- **routes/**：仅做 URL 映射，不写业务；挂到 `/api`。
+- **controllers/**：解析 body/query/params、校验入参、调 service、组响应。
+- **services/**：业务逻辑、事务、调 repository；不直接读 req/res。
+- **repositories/**：数据访问，按领域拆分（如 user.repository.ts）。
+- **middleware/**：鉴权、RBAC、统一错误、校验、requestId。
+
+## 命名
+
+- 文件：kebab-case + 职责后缀（`auth.routes.ts`、`user.service.ts`、`user.repository.ts`）。
+- 变量/函数 camelCase；类/接口/类型 PascalCase。
+- 接口：REST，复数资源（如 `/api/users`）；鉴权 `/api/auth/login`、`/api/auth/refresh`。
+
+## 响应与错误
+
+- 成功：JSON 统一结构，如 `{ data }`；错误由统一错误中间件输出：`{ code, message, requestId }`。
+- 状态码：200/201 成功；400 参数；401 未登录；403 无权限；404 不存在；422 业务校验；500 服务器错误。
+
+## 鉴权与 RBAC
+
+- 鉴权中间件：从 Cookie 或 `Authorization: Bearer` 取 token，校验后挂 `user`（含 id、username、permissions）到 `req.user`。
+- RBAC：`requirePermission('user:write')` 校验 `req.user.permissions`；`*` 为超级权限。与前端 `hasPermission` 规则一致。
+
+## 代码风格
+
+- 与 EditorConfig、Prettier 一致：LF、UTF-8、2 空格、单引号、分号。
+- 服务层入参/出参用明确类型；不依赖 req/res。扩展 Request 类型写在 `types/express.d.ts`。
+
+详细约定见项目根目录 **CONVENTIONS.md**。

@@ -25,9 +25,9 @@
 
 ## 环境与命令
 
-- 开发：`npm run dev`（默认 Vite 端口，如 5173）。
-- 构建：`npm run build`。
-- 代码风格：`npm run lint`、`npm run format`。
+- 开发：`pnpm run dev`（默认 Vite 端口，如 5173）。
+- 构建：`pnpm run build`。
+- 代码风格：`pnpm run lint`、`pnpm run format`。
 
 ## 常见问题
 

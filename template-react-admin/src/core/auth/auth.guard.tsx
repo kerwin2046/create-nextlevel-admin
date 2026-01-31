@@ -4,9 +4,6 @@ import { AuthContextType } from './auth.types'
 
 /**
  * @description 认证守卫，保护路由访问。未登录时重定向到登录页
- * @example <AuthGuard>
- * <Route path="/dashboard" element={<Dashboard />} />
- * </AuthGuard>
  */
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   console.log('AuthGuard', children);
