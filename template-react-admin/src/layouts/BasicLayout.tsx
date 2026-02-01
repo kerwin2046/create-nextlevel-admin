@@ -1,4 +1,4 @@
-import { Layout, Menu, Button, Space } from 'antd';
+import { Layout, Menu, Button, Space, Modal } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '@/core/state/store';
 import { useAuth } from '@/core/auth/auth.hooks';
@@ -44,7 +44,19 @@ export default function BasicLayout() {
            {user ? (
             <Space>
             Welcome, {user?.username}
-            <Button  type="link" onClick={() => logout()}>
+            <Button
+              type="link"
+              danger
+              onClick={() => {
+                Modal.confirm({
+                  title: '确认退出',
+                  content: '确定要退出登录吗？',
+                  okText: '确定',
+                  cancelText: '取消',
+                  onOk: () => logout(),
+                });
+              }}
+            >
               Logout
             </Button>
            </Space>

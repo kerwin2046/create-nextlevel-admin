@@ -2,29 +2,14 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/core/auth/auth.hooks';
 import { AuthContextType } from '@/core/auth/auth.types';
+import { message } from 'antd';
 import './login.css';
+import { EyeInvisibleOutlined } from '@ant-design/icons';
 
 type LoginForm = {
   username: string;
   password: string;
 };
-
-function EyeIcon({ show }: { show: boolean }) {
-  if (show) {
-    return (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-        <line x1="1" y1="1" x2="23" y2="23" />
-      </svg>
-    );
-  }
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
-  );
-}
 
 export default function Login() {
   const { login } = useAuth() as AuthContextType;
@@ -33,11 +18,10 @@ export default function Login() {
 
   const [form, setForm] = useState<LoginForm>({
     username: '',
-    password: '',
+    password: '12345678',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/dashboard';
 
@@ -50,19 +34,15 @@ export default function Login() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-
-    if (!form.username || !form.password) {
-      setError('请输入用户名和密码');
-      return;
-    }
 
     try {
       setLoading(true);
       await login({ username: form.username, password: form.password });
+      message.success('登录成功');
       navigate(from, { replace: true });
-    } catch {
-      setError('用户名或密码错误');
+    } catch (error) {
+      console.error(error);
+      message.error('登录失败');
     } finally {
       setLoading(false);
     }
@@ -70,31 +50,11 @@ export default function Login() {
 
   return (
     <div className="auth-page">
-      <div className="auth-page__brand">
-        <div className="auth-page__logo">
-          Hello Admin<span className="auth-page__logo-dot" />
-        </div>
-        <div className="auth-page__welcome">
-          <h1 className="auth-page__welcome-title">Welcome.</h1>
-          <p className="auth-page__welcome-sub">
-            Start your journey
-            <br />
-            now with our
-            <br />
-            management
-            <br />
-            system!
-          </p>
-        </div>
-      </div>
-
       <div className="auth-page__form-wrap">
         <div className="auth-page__form-box">
-          <h2 className="auth-page__form-title">Log in</h2>
+          <h2 className="auth-page__form-title">Hello, Welcome Back!</h2>
 
           <form onSubmit={onSubmit}>
-            {error && <div className="auth-page__error">{error}</div>}
-
             <div className="auth-page__field">
               <label className="auth-page__label" htmlFor="login-username">
                 Username
@@ -109,6 +69,7 @@ export default function Login() {
                   value={form.username}
                   onChange={onChange}
                   autoComplete="username"
+                  required
                 />
               </div>
             </div>
@@ -127,6 +88,7 @@ export default function Login() {
                   value={form.password}
                   onChange={onChange}
                   autoComplete="current-password"
+                  required
                 />
                 <button
                   type="button"
@@ -134,7 +96,7 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  <EyeIcon show={showPassword} />
+                  <EyeInvisibleOutlined />
                 </button>
               </div>
             </div>
