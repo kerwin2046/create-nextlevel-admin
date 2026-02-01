@@ -21,6 +21,12 @@ export type LoginPayload = {
   password: string
 }
 
+/** 注册参数 */
+export type RegisterPayload = {
+  username: string
+  password: string
+}
+
 /** 认证上下文类型 */
 export type AuthContextType = AuthState & { // & 表示与 AuthState 合并
   // 登录

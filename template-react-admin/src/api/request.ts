@@ -7,44 +7,50 @@ const request = axios.create({
 
 // 刷新 token 锁
 let isRefreshing = false;
-// 请求队列
-let queue: Function[] = [];
+// 请求队列：refresh 成功后重试、失败则 reject
+let queue: Array<{ retry: () => void; reject: (e: unknown) => void }> = [];
 
+request.interceptors.request.use(
+  config => {
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+// ! 这个拦截器是重点，需要仔细阅读
 request.interceptors.response.use(
   res => res,
   async error => {
-    // 获取原始请求配置
     const original = error.config;
-    console.log('original', original);
 
-    // 如果请求状态码为 401 且未重试（/me、/refresh 不触发刷新，避免死循环或无效重试）
-    const isAuthCheck = /\/auth\/(me|refresh)$/.test(original.url ?? '');
-    if (error.response?.status === 401 && !original._retry && !isAuthCheck) {
+    // 401 时：login/register/me/refresh 不触发 refresh，直接 reject（登录失败 ≠ token 过期）
+    const isAuthUrlNoRefresh = /\/auth\/(login|register|me|refresh)$/.test(original?.url ?? '');
+    if (error.response?.status === 401 && !original?._retry && !isAuthUrlNoRefresh) {
       original._retry = true;
 
-      // 如果未刷新 token
       if (!isRefreshing) {
         isRefreshing = true;
         try {
-          // 刷新 token
           await axios.post('/api/auth/refresh', {}, { withCredentials: true });
-          // 执行队列中的请求
-          queue.forEach(cb => cb());
-          // 清空队列
+          queue.forEach(({ retry }) => retry());
+          queue = [];
+        } catch {
+          queue.forEach(({ reject }) => reject(error));
           queue = [];
         } finally {
-          // 刷新 token 锁
           isRefreshing = false;
         }
       }
 
-      return new Promise(resolve => {
-        // 将请求添加到队列中
-        queue.push(() => resolve(request(original)));
+      return new Promise((resolve, reject) => {
+        queue.push({
+          retry: () => resolve(request(original)),
+          reject,
+        });
       });
     }
 
-    // 返回错误
     return Promise.reject(error);
   }
 );
