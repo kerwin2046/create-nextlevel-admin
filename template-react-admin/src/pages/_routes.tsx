@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate, type RouteObject } from 'react-router-do
 import BasicLayout from '@/layouts/BasicLayout';
 import BlankLayout from '@/layouts/BlankLayout';
 import Login from '@/pages/sys/login';
+import Register from '@/pages/sys/register';
 import type { RouteMeta } from '@/types';
 import { AuthGuard } from '@/core/auth/auth.guard';
 
@@ -21,6 +22,11 @@ const routes: RouteObjectWithMeta[] = [
     path: '/login',
     element: <BlankLayout />,
     children: [{ index: true, element: <Login /> }],
+  },
+  {
+    path: '/register',
+    element: <BlankLayout />,
+    children: [{ index: true, element: <Register /> }],
   },
   {
     path: '/dashboard',

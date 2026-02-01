@@ -11,6 +11,12 @@ export interface LoginPayload {
   password: string;
 }
 
+/** Register body */
+export interface RegisterPayload {
+  username: string;
+  password: string;
+}
+
 /** JWT payload stored in token */
 export interface JwtPayload {
   sub: string;

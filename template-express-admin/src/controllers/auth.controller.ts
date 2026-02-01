@@ -9,6 +9,11 @@ const loginSchema = [
   body('password').isString().notEmpty(),
 ];
 
+const registerSchema = [
+  body('username').isString().notEmpty().trim(),
+  body('password').isString().notEmpty(),
+];
+
 export const authController = {
   async login(req: Request, res: Response): Promise<void> {
     const result = validationResult(req);
@@ -25,6 +30,21 @@ export const authController = {
     const token = signToken(user);
     res.cookie(config.cookieName, token, config.cookieOptions);
     res.json({ user });
+  },
+
+  async register(req: Request, res: Response): Promise<void> {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      res.status(400).json({ code: 'VALIDATION_ERROR', message: result.array().toString() });
+      return;
+    }
+    const { username, password } = req.body as { username: string; password: string };
+    try {
+      const user = await authService.register({ username: username.trim(), password: password.trim() });
+      res.status(201).json({ user });
+    } catch (error) {
+      res.status(400).json({ code: 'BAD_REQUEST', message: 'Invalid email or password' });
+    }
   },
 
   logout(_req: Request, res: Response): void {
@@ -44,4 +64,4 @@ export const authController = {
   },
 };
 
-export { loginSchema };
+export { loginSchema, registerSchema };

@@ -12,6 +12,12 @@ export interface LoginPayload {
   password: string;
 }
 
+/** 注册参数 */
+export interface RegisterPayload {
+  username: string;
+  password: string;
+}
+
 /** 登录响应 */
 export interface LoginResponse {
   token?: string;

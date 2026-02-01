@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { prisma } from '../lib/db.js';
 import type { User } from '../types/auth.js';
 import type { LoginPayload } from '../types/auth.js';
+import type { RegisterPayload } from '../types/auth.js';
 
 export async function login(payload: LoginPayload): Promise<User | null> {
   const row = await prisma.user.findUnique({
@@ -17,4 +18,15 @@ export async function login(payload: LoginPayload): Promise<User | null> {
   };
 }
 
-export const authService = { login };
+export async function register(payload: RegisterPayload): Promise<User | null> {
+  const row = await prisma.user.create({
+    data: { username: payload.username, passwordHash: await bcrypt.hash(payload.password, 10) },
+  });
+  return {
+    id: row.id,
+    username: row.username,
+    permissions: row.permissions,
+  };
+}
+
+export const authService = { login, register };

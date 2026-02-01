@@ -1,10 +1,10 @@
-import express from 'express';
+import express, { Express } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { apiRoutes } from './routes/index.js';
 import { errorHandler } from './middleware/error.js';
 
-const app = express();
+const app: Express = express();
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());

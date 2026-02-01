@@ -1,7 +1,9 @@
 import request from '@/api/request';
-import { LoginPayload } from '@/types';
+import { LoginPayload, RegisterPayload } from '@/types';
 
 export const loginApi = (data: LoginPayload) => request.post('/auth/login', data);
+
+export const registerApi = (data: RegisterPayload) => request.post('/auth/register', data);
 
 export const logoutApi = () => request.post('/auth/logout');
 
